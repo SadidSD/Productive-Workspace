@@ -83,7 +83,8 @@ export async function getWorkspaceMembers(workspaceId: string, client?: Supabase
             role,
             profiles:user_id (
                 full_name,
-                avatar_url
+                avatar_url,
+                email
             )
         `)
         .eq('workspace_id', workspaceId)
@@ -100,7 +101,7 @@ export async function getWorkspaceMembers(workspaceId: string, client?: Supabase
         profile: {
             full_name: item.profiles.full_name,
             avatar_url: item.profiles.avatar_url,
-            email: "User" // Fallback since we can't query email from profiles yet
+            email: item.profiles.email || "No Email"
         }
     }))
 }

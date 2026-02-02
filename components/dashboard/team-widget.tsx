@@ -86,7 +86,10 @@ export function TeamWidget({ workspaceId, workspaceName, members }: TeamWidgetPr
                                     <p className="text-sm font-medium leading-none">
                                         {member.profile.full_name || 'Team Member'}
                                     </p>
-                                    <p className="text-xs text-muted-foreground capitalize">
+                                    <p className="text-xs text-muted-foreground">
+                                        {member.profile.email}
+                                    </p>
+                                    <p className="text-[10px] text-muted-foreground uppercase tracking-wide">
                                         {member.role}
                                     </p>
                                 </div>
