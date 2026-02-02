@@ -11,6 +11,7 @@ import { Loader2 } from 'lucide-react'
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [fullName, setFullName] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [isSignUp, setIsSignUp] = useState(false)
@@ -29,6 +30,9 @@ export default function LoginPage() {
                     password,
                     options: {
                         emailRedirectTo: `${location.origin}/auth/callback`,
+                        data: {
+                            full_name: fullName,
+                        }
                     },
                 })
                 if (error) throw error
@@ -60,6 +64,20 @@ export default function LoginPage() {
                 </div>
 
                 <form onSubmit={handleAuth} className="space-y-4">
+                    {isSignUp && (
+                        <div className="space-y-2">
+                            <Label htmlFor="fullName">Full Name</Label>
+                            <Input
+                                id="fullName"
+                                type="text"
+                                placeholder="John Doe"
+                                required
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                className="bg-muted/30"
+                            />
+                        </div>
+                    )}
                     <div className="space-y-2">
                         <Label htmlFor="email">Email</Label>
                         <Input
