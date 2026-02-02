@@ -1,0 +1,69 @@
+﻿
+> web@0.1.0 lint
+> eslint
+
+
+C:\Users\MSI\Desktop\Kortex\web\app\dashboard\decisions\page.tsx
+  3:29  warning  'CardHeader' is defined but never used  @typescript-eslint/no-unused-vars
+  3:41  warning  'CardTitle' is defined but never used   @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\app\dashboard\insights\page.tsx
+  3:10  warning  'Badge' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\app\dashboard\page.tsx
+  1:10  warning  'DashboardHeader' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\app\dashboard\projects\[id]\page.tsx
+  8:26  warning  'Clock' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\app\dashboard\tasks\page.tsx
+  3:29  warning  'CardHeader' is defined but never used  @typescript-eslint/no-unused-vars
+  3:41  warning  'CardTitle' is defined but never used   @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\app\login\page.tsx
+  42:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\MSI\Desktop\Kortex\web\components\app-sidebar.tsx
+  17:10  warning  'createClient' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\components\dashboard\dashboard-header.tsx
+  18:33  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\MSI\Desktop\Kortex\web\components\editor\editor.tsx
+  10:22  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  12:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\MSI\Desktop\Kortex\web\components\ui\sidebar.tsx
+  611:26  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\MSI\Desktop\Kortex\web\components\ui\sidebar.tsx:611:26
+  609 |   // Random width between 50 to 90%.
+  610 |   const width = React.useMemo(() => {
+> 611 |     return `${Math.floor(Math.random() * 40) + 50}%`
+      |                          ^^^^^^^^^^^^^ Cannot call impure function
+  612 |   }, [])
+  613 |
+  614 |   return (  react-hooks/purity
+
+C:\Users\MSI\Desktop\Kortex\web\components\workspaces\create-workspace-dialog.tsx
+  9:19  warning  'Plus' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\components\workspaces\workspace-switcher.tsx
+  12:5  warning  'DropdownMenuShortcut' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\lib\services\research.ts
+  7:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\MSI\Desktop\Kortex\web\lib\supabase\server.ts
+  18:30  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  27:30  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\MSI\Desktop\Kortex\web\scripts\migrate.js
+  1:20  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+Γ£û 21 problems (9 errors, 12 warnings)
+

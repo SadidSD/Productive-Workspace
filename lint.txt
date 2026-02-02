@@ -1,0 +1,143 @@
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\app\dashboard\decisions\page.tsx[24m[0m
+[0m  [2m3:29[22m  [33mwarning[39m  'CardHeader' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m3:41[22m  [33mwarning[39m  'CardTitle' is defined but never used   [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\app\dashboard\insights\page.tsx[24m[0m
+[0m  [2m3:10[22m  [33mwarning[39m  'Badge' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\app\dashboard\projects\page.tsx[24m[0m
+[0m  [2m6:10[22m  [33mwarning[39m  'ProjectCard' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\app\dashboard\settings\members\page.tsx[24m[0m
+[0m   [2m3:20[22m  [33mwarning[39m  'useEffect' is defined but never used              [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m25:24[22m  [33mwarning[39m  'getWorkspaceMembers' is defined but never used    [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m25:45[22m  [33mwarning[39m  'WorkspaceMember' is defined but never used        [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m34:44[22m  [31merror[39m    Unexpected any. Specify a different type           [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m35:12[22m  [33mwarning[39m  'isLoading' is assigned a value but never used     [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m35:23[22m  [33mwarning[39m  'setIsLoading' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m63:18[22m  [33mwarning[39m  'error' is defined but never used                  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\app\dashboard\tasks\page.tsx[24m[0m
+[0m  [2m3:29[22m  [33mwarning[39m  'CardHeader' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m3:41[22m  [33mwarning[39m  'CardTitle' is defined but never used   [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\app-sidebar.tsx[24m[0m
+[0m  [2m17:10[22m  [33mwarning[39m  'createClient' is defined but never used            [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m18:10[22m  [33mwarning[39m  'useEffect' is defined but never used               [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m19:21[22m  [33mwarning[39m  'getWorkspaces' is defined but never used           [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m72:24[22m  [33mwarning[39m  'setWorkspaces' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\editor\editor.tsx[24m[0m
+[0m   [2m56:62[22m  [31merror[39m  Unexpected any. Specify a different type                         [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m114:26[22m  [31merror[39m  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m114:28[22m  [31merror[39m  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\create-project-dialog.tsx[24m[0m
+[0m  [2m52:19[22m  [33mwarning[39m  'newProject' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\project-shell.tsx[24m[0m
+[0m    [2m3:20[22m  [33mwarning[39m  'useEffect' is defined but never used     [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m    [2m7:10[22m  [33mwarning[39m  'Button' is defined but never used        [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m25:41[22m  [33mwarning[39m  'tasks' is defined but never used         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m92:84[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m96:77[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m100:72[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\project-side-panel.tsx[24m[0m
+[0m  [2m14:36[22m  [33mwarning[39m  'project' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\sections\section-blueprint.tsx[24m[0m
+[0m  [2m27:70[22m  [31merror[39m  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m27:74[22m  [31merror[39m  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m27:80[22m  [31merror[39m  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m27:85[22m  [31merror[39m  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\sections\section-inspo.tsx[24m[0m
+[0m   [2m3:10[22m  [33mwarning[39m  'Separator' is defined but never used                            [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m11:66[22m  [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m11:74[22m  [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\sections\section-notes.tsx[24m[0m
+[0m  [2m15:118[22m  [31merror[39m  Error: Cannot call impure function during render[0m
+[0m[0m
+[0m`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).[0m
+[0m[0m
+[0mC:\Users\MSI\Desktop\Kortex\web\components\projects\sections\section-notes.tsx:15:118[0m
+[0m  13 | export function SectionNotes() {[0m
+[0m  14 |     const notes: Note[] = [[0m
+[0m> 15 |         { id: "1", content: "Client requested to prioritize mobile view over desktop for MVP.", created_at: new Date(Date.now() - 1000 * 60 * 60 * 2), type: 'feedback' },[0m
+[0m     |                                                                                                                      ^^^^^^^^^^ Cannot call impure function[0m
+[0m  16 |         { id: "2", content: "Auth integration might delay by 2 days due to API limits.", created_at: new Date(Date.now() - 1000 * 60 * 60 * 24), type: 'risk' },[0m
+[0m  17 |     ][0m
+[0m  18 |  [2mreact-hooks/purity[22m[0m
+[0m  [2m16:111[22m  [31merror[39m  Error: Cannot call impure function during render[0m
+[0m[0m
+[0m`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).[0m
+[0m[0m
+[0mC:\Users\MSI\Desktop\Kortex\web\components\projects\sections\section-notes.tsx:16:111[0m
+[0m  14 |     const notes: Note[] = [[0m
+[0m  15 |         { id: "1", content: "Client requested to prioritize mobile view over desktop for MVP.", created_at: new Date(Date.now() - 1000 * 60 * 60 * 2), type: 'feedback' },[0m
+[0m> 16 |         { id: "2", content: "Auth integration might delay by 2 days due to API limits.", created_at: new Date(Date.now() - 1000 * 60 * 60 * 24), type: 'risk' },[0m
+[0m     |                                                                                                               ^^^^^^^^^^ Cannot call impure function[0m
+[0m  17 |     ][0m
+[0m  18 |[0m
+[0m  19 |     return (                             [2mreact-hooks/purity[22m[0m
+[0m  [2m23:66[22m   [31merror[39m  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m23:70[22m   [31merror[39m  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\sections\section-requirements.tsx[24m[0m
+[0m  [2m51:66[22m  [31merror[39m  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m51:77[22m  [31merror[39m  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\sections\section-roadmap.tsx[24m[0m
+[0m   [2m8:10[22m  [33mwarning[39m  'Select' is defined but never used                               [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m8:18[22m  [33mwarning[39m  'SelectContent' is defined but never used                        [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m8:33[22m  [33mwarning[39m  'SelectItem' is defined but never used                           [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m8:45[22m  [33mwarning[39m  'SelectTrigger' is defined but never used                        [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m8:60[22m  [33mwarning[39m  'SelectValue' is defined but never used                          [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m67:66[22m  [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m67:71[22m  [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\projects\sections\section-workflow.tsx[24m[0m
+[0m    [2m5:10[22m  [33mwarning[39m  'Badge' is defined but never used             [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m12:31[22m  [33mwarning[39m  'SheetHeader' is defined but never used       [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m12:44[22m  [33mwarning[39m  'SheetTitle' is defined but never used        [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m12:56[22m  [33mwarning[39m  'SheetDescription' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m12:74[22m  [33mwarning[39m  'SheetTrigger' is defined but never used      [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m228:70[22m  [31merror[39m    Unexpected any. Specify a different type      [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\tasks\create-task-dialog.tsx[24m[0m
+[0m    [2m4:22[22m  [33mwarning[39m  'Task' is defined but never used          [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m112:56[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\workspaces\create-workspace-dialog.tsx[24m[0m
+[0m  [2m9:19[22m  [33mwarning[39m  'Plus' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\components\workspaces\workspace-switcher.tsx[24m[0m
+[0m  [2m12:5[22m  [33mwarning[39m  'DropdownMenuShortcut' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                            [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m49:9[22m  [31merror[39m    Error: This value cannot be modified[0m
+[0m[0m
+[0mModifying a variable defined outside a component or hook is not allowed. Consider using an effect.[0m
+[0m[0m
+[0mC:\Users\MSI\Desktop\Kortex\web\components\workspaces\workspace-switcher.tsx:49:9[0m
+[0m  47 |         setActiveWorkspace(workspace)[0m
+[0m  48 |         // Set cookie and refresh[0m
+[0m> 49 |         document.cookie = `workspace_id=${workspace.id}; path=/; max-age=31536000` // 1 year[0m
+[0m     |         ^^^^^^^^ value cannot be modified[0m
+[0m  50 |         router.refresh()[0m
+[0m  51 |     }[0m
+[0m  52 |  [2mreact-hooks/immutability[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\lib\services\members.ts[24m[0m
+[0m  [2m45:11[22m  [33mwarning[39m  'supabase' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\lib\services\workspaces.ts[24m[0m
+[0m  [2m97:28[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\MSI\Desktop\Kortex\web\lib\supabase\server.ts[24m[0m
+[0m  [2m18:30[22m  [33mwarning[39m  'error' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m27:30[22m  [33mwarning[39m  'error' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[31m[1m✖ 63 problems (25 errors, 38 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m
