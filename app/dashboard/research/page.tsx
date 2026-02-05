@@ -7,12 +7,17 @@ import Link from "next/link"
 
 import { createClient } from "@/lib/supabase/server"
 
+import { cookies } from "next/headers"
+
 import { CreateInquiryDialog } from "@/components/research/create-inquiry-dialog"
 
 export default async function ResearchPage() {
     const supabase = await createClient()
+    const cookieStore = await cookies()
+    const selectedId = cookieStore.get('workspace_id')?.value
+
     const workspaces = await getWorkspaces(supabase)
-    const currentWorkspace = workspaces[0]
+    const currentWorkspace = workspaces.find(w => w.id === selectedId) || workspaces[0]
 
     if (!currentWorkspace) {
         return (
