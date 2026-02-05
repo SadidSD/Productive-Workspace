@@ -31,9 +31,9 @@ export async function getResearch(workspaceId: string, client?: SupabaseClient) 
         .eq('workspace_id', workspaceId)
         .order('created_at', { ascending: false })
 
-    if (error || !data || data.length === 0) {
-        // Fallback to mock data for design verification
-        return MOCK_RESEARCH
+    if (error) {
+        console.error('Error fetching research:', error)
+        return []
     }
 
     return data as ResearchInquiry[]
@@ -62,10 +62,6 @@ export async function getResearchById(id: string, client?: SupabaseClient) {
             insights: insightsData || []
         } as ResearchInquiry
     }
-
-    // 2. Fallback to mock data (for pure demo/dev)
-    const mock = MOCK_RESEARCH.find(r => r.id === id)
-    if (mock) return mock
 
     return null
 }
