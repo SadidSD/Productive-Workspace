@@ -69,21 +69,24 @@ export async function getResearchById(id: string, client?: SupabaseClient) {
 export async function updateResearch(id: string, updates: Partial<ResearchInquiry>) {
     const supabase = createClient()
 
-    // Optimistic update for mock data
-    const mockIndex = MOCK_RESEARCH.findIndex(r => r.id === id)
-    if (mockIndex !== -1) {
-        MOCK_RESEARCH[mockIndex] = { ...MOCK_RESEARCH[mockIndex], ...updates }
-    }
+    // Separate insights from the main update payload
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { insights, ...entryUpdates } = updates
+
+    // Only proceed if there are actual fields to update on the entry
+    if (Object.keys(entryUpdates).length === 0) return true
 
     const { error } = await supabase
         .from('research_entries')
-        .update(updates)
+        .update(entryUpdates)
         .eq('id', id)
 
     if (error) {
-        console.warn('Update failed (using mock):', error)
-        return
+        console.error('Update failed:', error)
+        return false
     }
+
+    return true
 }
 
 export async function createResearch(workspaceId: string, title: string) {
