@@ -72,3 +72,32 @@ export async function createTask(
     if (error) throw error
     return data as Task
 }
+
+export async function updateTask(
+    taskId: string,
+    updates: Partial<Pick<Task, 'title' | 'description' | 'priority' | 'status' | 'assignee_id' | 'due_date'>>
+) {
+    const supabase = createClient()
+
+    const { data, error } = await supabase
+        .from('tasks')
+        .update(updates)
+        .eq('id', taskId)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data as Task
+}
+
+export async function deleteTask(taskId: string) {
+    const supabase = createClient()
+
+    const { error } = await supabase
+        .from('tasks')
+        .delete()
+        .eq('id', taskId)
+
+    if (error) throw error
+    return true
+}

@@ -3,6 +3,7 @@ import { getWorkspaces } from "@/lib/services/workspaces"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CreateTaskDialog } from "@/components/tasks/create-task-dialog"
+import { TaskList } from "@/components/tasks/task-list"
 
 import { createClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
@@ -41,22 +42,7 @@ export default async function TasksPage() {
                 </div>
 
                 <div className="space-y-4">
-                    {tasks.map(task => (
-                        <Card key={task.id} className="cursor-pointer hover:bg-muted/50 transition-colors">
-                            <CardContent className="p-4 flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                    <div className={`w-3 h-3 rounded-full ${task.priority === 'high' ? 'bg-red-400' : 'bg-slate-300'}`} />
-                                    <div>
-                                        <div className="font-medium">{task.title}</div>
-                                        <div className="text-xs text-muted-foreground line-clamp-1">{task.description}</div>
-                                    </div>
-                                </div>
-                                <Badge variant="outline" className={statusColors[task.status] || ""}>
-                                    {task.status.replace('_', ' ').toUpperCase()}
-                                </Badge>
-                            </CardContent>
-                        </Card>
-                    ))}
+                    <TaskList initialTasks={tasks} workspaceId={currentWorkspace.id} />
                 </div>
             </div>
         </div>
