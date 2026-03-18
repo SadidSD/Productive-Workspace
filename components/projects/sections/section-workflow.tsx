@@ -221,7 +221,7 @@ export function SectionWorkflow({ initialRows, members, onChange }: SectionWorkf
                                         <Activity className="h-3 w-3" />
                                         Workflow Detail
                                     </div>
-                                    <h2 className="text-3xl font-bold tracking-tight uppercase">{activeRow.sector}</h2>
+                                    <SheetTitle className="text-3xl font-bold tracking-tight uppercase">{activeRow.sector}</SheetTitle>
                                 </div>
 
                                 {/* Key Properties Grid */}
