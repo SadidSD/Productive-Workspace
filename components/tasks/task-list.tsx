@@ -6,6 +6,7 @@ import { getWorkspaceMembers, WorkspaceMember } from "@/lib/services/members"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
@@ -80,6 +81,22 @@ export function TaskList({ initialTasks, workspaceId }: TaskListProps) {
         }
     }
 
+    const handleToggleDone = async (task: Task, e: React.MouseEvent | React.FormEvent) => {
+        if ('stopPropagation' in e) e.stopPropagation()
+        const newStatus = task.status === 'done' ? 'todo' : 'done'
+        
+        // Optimistic UI update
+        setTasks(tasks.map(t => t.id === task.id ? { ...t, status: newStatus } : t))
+        
+        try {
+            await updateTask(task.id, { status: newStatus })
+        } catch (error) {
+            console.error("Failed to toggle status:", error)
+            // Revert on failure
+            setTasks(tasks.map(t => t.id === task.id ? { ...t, status: task.status } : t))
+        }
+    }
+
     const toggleExpand = (taskId: string) => {
         setExpandedTaskId(expandedTaskId === taskId ? null : taskId)
     }
@@ -104,8 +121,15 @@ export function TaskList({ initialTasks, workspaceId }: TaskListProps) {
                         <CardContent className={`p-4 ${isExpanded ? 'pb-6' : ''}`}>
                             <div className="flex items-start justify-between">
                                 <div className="flex items-start gap-4 flex-1">
-                                    <div className={`w-3 h-3 rounded-full mt-1.5 flex-shrink-0 ${task.priority === 'high' ? 'bg-red-400' : task.priority === 'medium' ? 'bg-orange-300' : 'bg-slate-300'}`} />
-                                    <div className="flex-1 mr-4">
+                                    <div className="mt-1 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+                                        <Checkbox 
+                                            checked={task.status === 'done'} 
+                                            onCheckedChange={() => handleToggleDone(task, { stopPropagation: () => {} } as React.MouseEvent)} 
+                                            className="h-5 w-5 rounded-md"
+                                        />
+                                    </div>
+                                    <div className={`w-3 h-3 rounded-full mt-2 flex-shrink-0 ${task.priority === 'high' ? 'bg-red-400' : task.priority === 'medium' ? 'bg-orange-300' : 'bg-slate-300'}`} />
+                                    <div className={`flex-1 mr-4 ${task.status === 'done' ? 'opacity-50 line-through' : ''}`}>
                                         <div className="font-medium text-lg leading-tight mb-1">{task.title}</div>
                                         {task.description && (
                                             <div className={`text-sm text-muted-foreground whitespace-pre-wrap ${!isExpanded && 'line-clamp-1'}`}>
