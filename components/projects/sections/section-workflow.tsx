@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { WorkspaceMember } from "@/lib/services/workspaces"
 import { Input } from "@/components/ui/input"
@@ -139,39 +140,43 @@ export function SectionWorkflow({ initialRows, members, onChange }: SectionWorkf
                             {/* Separator */}
                             <div className="h-8 w-px bg-border/40" />
 
-                            {/* Assignee Avatar */}
-                            <Select
-                                value={row.assigned_user_id || "unassigned"}
-                                onValueChange={(val) => updateRow(row.id, { assigned_user_id: val === "unassigned" ? "" : val })}
-                            >
-                                <SelectTrigger className="w-10 h-10 rounded-full border-0 p-0 focus:ring-0 shadow-none hover:opacity-80 transition-opacity overflow-hidden ring-2 ring-transparent bg-muted/50 data-[state=open]:ring-primary/20">
+                            {/* Assignee Avatar (Refactored to DropdownMenu for reliability) */}
+                            <DropdownMenu>
+                                <DropdownMenuTrigger className="w-10 h-10 rounded-full border-0 p-0 focus:ring-0 shadow-none hover:opacity-80 transition-opacity overflow-hidden ring-2 ring-transparent bg-muted/50 data-[state=open]:ring-primary/20 outline-none flex items-center justify-center">
                                     {row.assigned_user_id && getMember(row.assigned_user_id) ? (
                                         <Avatar className="h-10 w-10">
                                             <AvatarImage src={getMember(row.assigned_user_id)?.profile.avatar_url} />
                                             <AvatarFallback>{(getMember(row.assigned_user_id)?.profile.full_name?.[0] || "U").toUpperCase()}</AvatarFallback>
                                         </Avatar>
                                     ) : (
-                                        <div className="h-full w-full flex items-center justify-center bg-muted text-muted-foreground group-hover:text-foreground">
+                                        <div className="h-full w-full flex items-center justify-center bg-muted text-muted-foreground hover:text-foreground">
                                             <span className="sr-only">Assign</span>
                                             <UserIcon className="h-4 w-4" />
                                         </div>
                                     )}
-                                </SelectTrigger>
-                                <SelectContent align="end">
-                                    <SelectItem value="unassigned">Unassigned</SelectItem>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-48">
+                                    <DropdownMenuItem onClick={() => updateRow(row.id, { assigned_user_id: "" })}>
+                                        <div className="flex items-center gap-2 text-muted-foreground w-full">
+                                            <div className="w-5 h-5 flex items-center justify-center">
+                                                <X className="w-3 h-3" />
+                                            </div>
+                                            <span>Unassigned</span>
+                                        </div>
+                                    </DropdownMenuItem>
                                     {members.map(m => (
-                                        <SelectItem key={m.user_id} value={m.user_id}>
-                                            <div className="flex items-center gap-2">
+                                        <DropdownMenuItem key={m.user_id} onClick={() => updateRow(row.id, { assigned_user_id: m.user_id })}>
+                                            <div className="flex items-center gap-2 w-full">
                                                 <Avatar className="h-5 w-5">
                                                     <AvatarImage src={m.profile.avatar_url} />
                                                     <AvatarFallback className="text-[10px]">{(m.profile.full_name?.[0] || "U").toUpperCase()}</AvatarFallback>
                                                 </Avatar>
-                                                <span>{m.profile.full_name || "User"}</span>
+                                                <span className="truncate">{m.profile.full_name || "User"}</span>
                                             </div>
-                                        </SelectItem>
+                                        </DropdownMenuItem>
                                     ))}
-                                </SelectContent>
-                            </Select>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
 
                             {/* Delete Action (Hover only) */}
                             <Button
@@ -244,11 +249,8 @@ export function SectionWorkflow({ initialRows, members, onChange }: SectionWorkf
                                     <div className="space-y-1.5">
                                         <label className="text-xs font-medium text-muted-foreground">Assignee</label>
                                         <div className="w-full">
-                                            <Select
-                                                value={activeRow.assigned_user_id || "unassigned"}
-                                                onValueChange={(val) => updateRow(activeRow.id, { assigned_user_id: val === "unassigned" ? "" : val })}
-                                            >
-                                                <SelectTrigger className="w-full h-9 bg-muted/30 border-muted-foreground/20">
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger className="w-full h-9 bg-muted/30 border border-muted-foreground/20 rounded-md px-3 flex items-center justify-between outline-none hover:bg-muted/50 transition-colors">
                                                     <div className="flex items-center gap-2">
                                                         {activeRow.assigned_user_id && getMember(activeRow.assigned_user_id) ? (
                                                             <>
@@ -259,25 +261,30 @@ export function SectionWorkflow({ initialRows, members, onChange }: SectionWorkf
                                                                 <span className="truncate text-xs">{getMember(activeRow.assigned_user_id)?.profile.full_name || "Assigned"}</span>
                                                             </>
                                                         ) : (
-                                                            <span className="text-muted-foreground">Unassigned</span>
+                                                            <span className="text-muted-foreground text-sm">Unassigned</span>
                                                         )}
                                                     </div>
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="unassigned">Unassigned</SelectItem>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent className="w-56">
+                                                    <DropdownMenuItem onClick={() => updateRow(activeRow.id, { assigned_user_id: "" })}>
+                                                        <div className="flex items-center gap-2 text-muted-foreground">
+                                                            <X className="w-4 h-4" />
+                                                            <span>Unassigned</span>
+                                                        </div>
+                                                    </DropdownMenuItem>
                                                     {members.map(m => (
-                                                        <SelectItem key={m.user_id} value={m.user_id}>
+                                                        <DropdownMenuItem key={m.user_id} onClick={() => updateRow(activeRow.id, { assigned_user_id: m.user_id })}>
                                                             <div className="flex items-center gap-2">
                                                                 <Avatar className="h-5 w-5">
                                                                     <AvatarImage src={m.profile.avatar_url} />
                                                                     <AvatarFallback className="text-[10px]">{(m.profile.full_name?.[0] || "U").toUpperCase()}</AvatarFallback>
                                                                 </Avatar>
-                                                                <span className="text-sm">{m.profile.full_name || "User"}</span>
+                                                                <span className="text-sm truncate">{m.profile.full_name || "User"}</span>
                                                             </div>
-                                                        </SelectItem>
+                                                        </DropdownMenuItem>
                                                     ))}
-                                                </SelectContent>
-                                            </Select>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                         </div>
                                     </div>
                                     <div className="space-y-1.5">
