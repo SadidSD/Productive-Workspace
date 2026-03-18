@@ -141,8 +141,8 @@ export function SectionWorkflow({ initialRows, members, onChange }: SectionWorkf
 
                             {/* Assignee Avatar */}
                             <Select
-                                value={row.assigned_user_id}
-                                onValueChange={(val) => updateRow(row.id, { assigned_user_id: val })}
+                                value={row.assigned_user_id || "unassigned"}
+                                onValueChange={(val) => updateRow(row.id, { assigned_user_id: val === "unassigned" ? "" : val })}
                             >
                                 <SelectTrigger className="w-10 h-10 rounded-full border-0 p-0 focus:ring-0 shadow-none hover:opacity-80 transition-opacity overflow-hidden ring-2 ring-transparent bg-muted/50 data-[state=open]:ring-primary/20">
                                     {row.assigned_user_id && getMember(row.assigned_user_id) ? (
@@ -245,8 +245,8 @@ export function SectionWorkflow({ initialRows, members, onChange }: SectionWorkf
                                         <label className="text-xs font-medium text-muted-foreground">Assignee</label>
                                         <div className="w-full">
                                             <Select
-                                                value={activeRow.assigned_user_id}
-                                                onValueChange={(val) => updateRow(activeRow.id, { assigned_user_id: val })}
+                                                value={activeRow.assigned_user_id || "unassigned"}
+                                                onValueChange={(val) => updateRow(activeRow.id, { assigned_user_id: val === "unassigned" ? "" : val })}
                                             >
                                                 <SelectTrigger className="w-full h-9 bg-muted/30 border-muted-foreground/20">
                                                     <div className="flex items-center gap-2">
