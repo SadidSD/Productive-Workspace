@@ -37,6 +37,7 @@ export function Editor({ initialContent, editable = true, onChange }: EditorProp
         ],
         content: initialContent,
         editable,
+        immediatelyRender: false,
         editorProps: {
             attributes: {
                 class: 'prose prose-lg prose-neutral dark:prose-invert max-w-none focus:outline-none min-h-[150px] px-2',
