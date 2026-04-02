@@ -13,7 +13,7 @@ import {
     SidebarRail,
     SidebarFooter,
 } from "@/components/ui/sidebar"
-import { Home, Inbox, Search, Settings, FileText, Brain, Layers, ChevronUp, User2, LogOut } from "lucide-react"
+import { Home, Inbox, Search, Settings, FileText, Brain, Layers, ChevronUp, User2, LogOut, UserPlus } from "lucide-react"
 import { WorkspaceSwitcher } from "@/components/workspaces/workspace-switcher"
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
@@ -35,6 +35,11 @@ const items = [
         title: "Tasks",
         url: "/dashboard/tasks",
         icon: Inbox,
+    },
+    {
+        title: "Leads",
+        url: "/dashboard/leads",
+        icon: UserPlus,
     },
     {
         title: "Research Hub",
