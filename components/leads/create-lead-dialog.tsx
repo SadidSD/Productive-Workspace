@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { createLead, Lead, LeadStatus, LeadSource } from "@/lib/services/leads"
 import { getWorkspaceMembers, WorkspaceMember } from "@/lib/services/members"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -87,8 +88,9 @@ export function CreateLeadDialog({ workspaceId, children }: CreateLeadDialogProp
             setOpen(false)
             router.refresh()
             setFormData(initialFormData)
-        } catch (error) {
+        } catch (error: any) {
             console.error(error)
+            toast.error(error.message || "Failed to create lead")
         } finally {
             setIsLoading(false)
         }
