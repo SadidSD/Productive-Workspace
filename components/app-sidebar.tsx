@@ -19,6 +19,7 @@ import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
 import { Workspace } from "@/lib/services/workspaces"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { ModeToggle } from "@/components/mode-toggle"
 
 const items = [
     {
@@ -121,6 +122,7 @@ export function AppSidebar({
                                 <DropdownMenuItem>
                                     <span>Account</span>
                                 </DropdownMenuItem>
+                                <ModeToggle />
                                 <DropdownMenuItem onClick={async () => {
                                     const supabase = createClient()
                                     await supabase.auth.signOut()
