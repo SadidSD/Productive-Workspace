@@ -50,8 +50,10 @@ import {
     Phone,
     DollarSign,
     ArrowUpDown,
+    Eye,
 } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
+import { ViewLeadDialog } from "./view-lead-dialog"
 
 interface LeadListProps {
     initialLeads: Lead[]
@@ -99,6 +101,9 @@ export function LeadList({ initialLeads, workspaceId }: LeadListProps) {
     const [editLead, setEditLead] = useState<Lead | null>(null)
     const [isEditing, setIsEditing] = useState(false)
     const [members, setMembers] = useState<WorkspaceMember[]>([])
+
+    // View State
+    const [viewLead, setViewLead] = useState<Lead | null>(null)
 
     // Delete State
     const [isDeleting, setIsDeleting] = useState<string | null>(null)
@@ -327,8 +332,16 @@ export function LeadList({ initialLeads, workspaceId }: LeadListProps) {
                                 return (
                                     <TableRow key={lead.id} className="group">
                                         <TableCell className="font-medium">
-                                            <div className="flex flex-col">
+                                            <div className="flex items-center gap-2 group/name">
                                                 <span>{lead.name}</span>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-6 w-6 opacity-0 group-hover/name:opacity-100 group-hover:opacity-100 transition-opacity"
+                                                    onClick={() => setViewLead(lead)}
+                                                >
+                                                    <Eye className="h-3.5 w-3.5 text-muted-foreground" />
+                                                </Button>
                                             </div>
                                         </TableCell>
                                         <TableCell>
@@ -395,24 +408,51 @@ export function LeadList({ initialLeads, workspaceId }: LeadListProps) {
                                             </span>
                                         </TableCell>
                                         <TableCell>
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity">
-                                                        {isDeleting === lead.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <MoreVertical className="h-4 w-4" />}
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem onClick={() => setEditLead({ ...lead, assigned_to: lead.assigned_to || 'unassigned' })}>
-                                                        <Edit2 className="mr-2 h-4 w-4" />
-                                                        Edit Lead
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuSeparator />
-                                                    <DropdownMenuItem className="text-destructive focus:bg-destructive/10 cursor-pointer" onClick={(e) => handleDelete(lead.id, e)}>
-                                                        <Trash2 className="mr-2 h-4 w-4" />
-                                                        Delete Lead
-                                                    </DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
+                                            <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                                                    onClick={() => setEditLead({ ...lead, assigned_to: lead.assigned_to || 'unassigned' })}
+                                                >
+                                                    <Edit2 className="h-4 w-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                                    onClick={(e) => handleDelete(lead.id, e)}
+                                                    disabled={isDeleting === lead.id}
+                                                >
+                                                    {isDeleting === lead.id ? (
+                                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                                    ) : (
+                                                        <Trash2 className="h-4 w-4" />
+                                                    )}
+                                                </Button>
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                                                            <MoreVertical className="h-4 w-4" />
+                                                        </Button>
+                                                    </DropdownMenuTrigger>
+                                                    <DropdownMenuContent align="end">
+                                                        <DropdownMenuItem onClick={() => setViewLead(lead)}>
+                                                            <Eye className="mr-2 h-4 w-4" />
+                                                            View Details
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem onClick={() => setEditLead({ ...lead, assigned_to: lead.assigned_to || 'unassigned' })}>
+                                                            <Edit2 className="mr-2 h-4 w-4" />
+                                                            Edit Lead
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuSeparator />
+                                                        <DropdownMenuItem className="text-destructive focus:bg-destructive/10 cursor-pointer" onClick={(e) => handleDelete(lead.id, e)}>
+                                                            <Trash2 className="mr-2 h-4 w-4" />
+                                                            Delete Lead
+                                                        </DropdownMenuItem>
+                                                    </DropdownMenuContent>
+                                                </DropdownMenu>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 )
@@ -581,6 +621,13 @@ export function LeadList({ initialLeads, workspaceId }: LeadListProps) {
                     )}
                 </DialogContent>
             </Dialog>
+
+            {/* View Dialog */}
+            <ViewLeadDialog
+                lead={viewLead}
+                open={!!viewLead}
+                onOpenChange={(open) => !open && setViewLead(null)}
+            />
         </div>
     )
 }
