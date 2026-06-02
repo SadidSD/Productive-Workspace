@@ -19,7 +19,7 @@ create table leads (
   -- Pipeline
   status        lead_status default 'new'::lead_status,
   source        lead_source default 'other'::lead_source,
-  value         numeric(12,2),
+  value         numeric(12,2) default 7000,
 
   -- Details
   notes         text,

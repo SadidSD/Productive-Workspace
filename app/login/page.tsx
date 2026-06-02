@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -16,7 +16,11 @@ export default function LoginPage() {
     const [error, setError] = useState<string | null>(null)
     const [isSignUp, setIsSignUp] = useState(false)
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const next = searchParams.get('next') ?? '/dashboard'
     const supabase = createClient()
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? location.origin
 
     const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -29,7 +33,7 @@ export default function LoginPage() {
                     email,
                     password,
                     options: {
-                        emailRedirectTo: `${location.origin}/auth/callback`,
+                        emailRedirectTo: `${appUrl}/auth/callback?next=${encodeURIComponent(next)}`,
                         data: {
                             full_name: fullName,
                         }
@@ -43,7 +47,7 @@ export default function LoginPage() {
                     password,
                 })
                 if (error) throw error
-                router.push('/dashboard')
+                router.push(next)
                 router.refresh()
             }
         } catch (err: unknown) {

@@ -156,8 +156,8 @@ export function LeadList({ initialLeads, workspaceId }: LeadListProps) {
     // Pipeline stats
     const pipelineStats = useMemo(() => {
         const active = leads.filter(l => !['won', 'lost'].includes(l.status))
-        const totalValue = active.reduce((sum, l) => sum + (l.value || 0), 0)
-        const wonValue = leads.filter(l => l.status === 'won').reduce((sum, l) => sum + (l.value || 0), 0)
+        const totalValue = active.reduce((sum, l) => sum + (l.value ?? 7000), 0)
+        const wonValue = leads.filter(l => l.status === 'won').reduce((sum, l) => sum + (l.value ?? 7000), 0)
         return { activeCount: active.length, totalValue, wonValue, totalCount: leads.length }
     }, [leads])
 
@@ -382,11 +382,7 @@ export function LeadList({ initialLeads, workspaceId }: LeadListProps) {
                                             </span>
                                         </TableCell>
                                         <TableCell>
-                                            {lead.value ? (
-                                                <span className="font-medium">{formatCurrency(lead.value)}</span>
-                                            ) : (
-                                                <span className="text-muted-foreground">—</span>
-                                            )}
+                                            <span className="font-medium">{formatCurrency(lead.value ?? 7000)}</span>
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-2">

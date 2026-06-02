@@ -51,7 +51,7 @@ const initialFormData: FormData = {
     company: "",
     status: "new",
     source: "other",
-    value: "",
+    value: "7000",
     notes: "",
     assigned_to: "unassigned",
 }
