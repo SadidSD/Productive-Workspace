@@ -13,7 +13,7 @@ import {
     SidebarRail,
     SidebarFooter,
 } from "@/components/ui/sidebar"
-import { Home, Inbox, Search, Settings, FileText, Brain, Layers, ChevronUp, User2, LogOut, UserPlus } from "lucide-react"
+import { Home, Inbox, Search, Settings, FileText, Brain, Layers, ChevronUp, User2, LogOut, UserPlus, Instagram } from "lucide-react"
 import { WorkspaceSwitcher } from "@/components/workspaces/workspace-switcher"
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
@@ -41,6 +41,11 @@ const items = [
         title: "Leads",
         url: "/dashboard/leads",
         icon: UserPlus,
+    },
+    {
+        title: "Instagram",
+        url: "/dashboard/instagram",
+        icon: Instagram,
     },
     {
         title: "Research Hub",

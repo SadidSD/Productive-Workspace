@@ -167,3 +167,113 @@ create policy "Editors can insert projects" on projects
       and role in ('owner', 'admin', 'editor')
     )
   );
+
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- INSTAGRAM CONTENT PLANNER
+-- ═══════════════════════════════════════════════════════════════════════════════
+
+-- Instagram Content Types
+create type ig_post_format as enum ('reel', 'carousel', 'story', 'live');
+create type ig_post_status as enum ('idea', 'draft', 'ready', 'scheduled', 'published', 'missed');
+create type ig_content_pillar as enum ('platform_pain', 'solution', 'education', 'comparison', 'case_study');
+create type ig_script_formula as enum ('problem_agitate_solve', 'before_after_bridge', 'list', 'opinion_reasoning');
+create type ig_funnel_stage as enum ('awareness', 'education', 'trust', 'conversion');
+
+-- Instagram Posts
+create table instagram_posts (
+  id uuid default uuid_generate_v4() primary key,
+  workspace_id uuid references workspaces(id) on delete cascade not null,
+  title text not null,
+  caption text,
+  format ig_post_format default 'reel',
+  pillar ig_content_pillar,
+  script_formula ig_script_formula,
+  funnel_stage ig_funnel_stage,
+  status ig_post_status default 'idea',
+
+  -- Script structure (Hook → Retain → Reward)
+  hook_text text,
+  retain_text text,
+  reward_text text,
+
+  -- VVA framework
+  has_value boolean default false,
+  has_vulnerability boolean default false,
+  has_authority boolean default false,
+
+  -- Metadata
+  hashtags text[],
+  scheduled_date date,
+  scheduled_time time,
+  cta text default 'DM me ''TCG'' to see how I can help.',
+  media_notes text,
+  notes text,
+
+  created_by uuid references profiles(id),
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Engagement Checklist (daily tracking)
+create table ig_engagement_checklist (
+  id uuid default uuid_generate_v4() primary key,
+  workspace_id uuid references workspaces(id) on delete cascade not null,
+  check_date date not null default CURRENT_DATE,
+  engaged_tcg_content boolean default false,
+  replied_comments_dms boolean default false,
+  dmed_store_owners boolean default false,
+  watched_tcg_reels boolean default false,
+  created_at timestamptz default now(),
+  unique(workspace_id, check_date)
+);
+
+-- RLS
+alter table instagram_posts enable row level security;
+alter table ig_engagement_checklist enable row level security;
+
+-- Instagram Posts Policies
+create policy "Members can view instagram posts" on instagram_posts
+  for select using (is_workspace_member(workspace_id));
+
+create policy "Editors can insert instagram posts" on instagram_posts
+  for insert with check (
+    is_workspace_member(workspace_id) AND
+    exists (
+      select 1 from workspace_members
+      where workspace_id = instagram_posts.workspace_id
+      and user_id = auth.uid()
+      and role in ('owner', 'admin', 'editor')
+    )
+  );
+
+create policy "Editors can update instagram posts" on instagram_posts
+  for update using (
+    is_workspace_member(workspace_id) AND
+    exists (
+      select 1 from workspace_members
+      where workspace_id = instagram_posts.workspace_id
+      and user_id = auth.uid()
+      and role in ('owner', 'admin', 'editor')
+    )
+  );
+
+create policy "Editors can delete instagram posts" on instagram_posts
+  for delete using (
+    is_workspace_member(workspace_id) AND
+    exists (
+      select 1 from workspace_members
+      where workspace_id = instagram_posts.workspace_id
+      and user_id = auth.uid()
+      and role in ('owner', 'admin', 'editor')
+    )
+  );
+
+-- Engagement Checklist Policies
+create policy "Members can view engagement checklist" on ig_engagement_checklist
+  for select using (is_workspace_member(workspace_id));
+
+create policy "Editors can insert engagement checklist" on ig_engagement_checklist
+  for insert with check (is_workspace_member(workspace_id));
+
+create policy "Editors can update engagement checklist" on ig_engagement_checklist
+  for update using (is_workspace_member(workspace_id));
