@@ -33,6 +33,7 @@ import { Button } from '@/components/ui/button'
 import { PillarBadge } from './pillar-badge'
 import { FormulaBadge } from './formula-badge'
 import { StatusBadge } from './status-badge'
+import { QuickStatusSelector } from './quick-status-selector'
 import { deleteInstagramPost } from '@/lib/services/instagram'
 
 import type {
@@ -120,12 +121,15 @@ export function PostList({ posts, onPostClick }: PostListProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="idea">Idea</SelectItem>
-              <SelectItem value="draft">Draft</SelectItem>
-              <SelectItem value="ready">Ready</SelectItem>
-              <SelectItem value="scheduled">Scheduled</SelectItem>
-              <SelectItem value="published">Published</SelectItem>
-              <SelectItem value="missed">Missed</SelectItem>
+              <SelectItem value="idea">Idea 💡</SelectItem>
+              <SelectItem value="draft">Draft 📝</SelectItem>
+              <SelectItem value="scripted">Scripted ✍️</SelectItem>
+              <SelectItem value="shot">Shot 🎥</SelectItem>
+              <SelectItem value="editing">Editing ✂️</SelectItem>
+              <SelectItem value="ready">Ready ✨</SelectItem>
+              <SelectItem value="scheduled">Scheduled 📅</SelectItem>
+              <SelectItem value="published">Posted 🚀</SelectItem>
+              <SelectItem value="missed">Missed ⚠️</SelectItem>
             </SelectContent>
           </Select>
 
@@ -192,7 +196,9 @@ export function PostList({ posts, onPostClick }: PostListProps) {
                   </TableCell>
                   <TableCell>{post.script_formula && <FormulaBadge formula={post.script_formula} />}</TableCell>
                   <TableCell className="capitalize text-sm">{post.funnel_stage}</TableCell>
-                  <TableCell><StatusBadge status={post.status} /></TableCell>
+                  <TableCell onClick={(e) => e.stopPropagation()}>
+                    <QuickStatusSelector postId={post.id} currentStatus={post.status} />
+                  </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
                     {post.scheduled_date ? format(new Date(post.scheduled_date), 'MMM d, yyyy') : '-'}
                   </TableCell>

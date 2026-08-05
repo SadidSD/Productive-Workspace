@@ -1,9 +1,9 @@
 "use client";
 
 import { InstagramPost } from "@/lib/services/instagram";
-import { Film, Images, CircleDot, Radio } from "lucide-react";
+import { Film, Images, CircleDot, Radio, FileText } from "lucide-react";
 import { PillarBadge } from "./pillar-badge";
-import { StatusBadge } from "./status-badge";
+import { QuickStatusSelector } from "./quick-status-selector";
 import { FormulaBadge } from "./formula-badge";
 
 interface PostCardProps {
@@ -27,37 +27,36 @@ export function PostCard({ post, onClick }: PostCardProps) {
     }
   };
 
-  // Graceful fallback for post title representation
-  const title = (post as any).title || (post as any).hook || "Untitled Post";
-  const scheduledTime = (post as any).scheduledFor 
-    ? new Date((post as any).scheduledFor).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
-    : null;
+  const title = post.title || "Untitled Post";
 
   return (
     <div
       onClick={onClick}
-      className="flex flex-col gap-2 rounded-lg border bg-card p-2 text-card-foreground transition-colors hover:bg-accent cursor-pointer"
+      className="flex flex-col gap-2 rounded-lg border bg-card p-2 text-card-foreground transition-colors hover:border-primary/50 cursor-pointer shadow-2xs group"
     >
-      <div className="flex items-center gap-1.5 overflow-hidden">
-        <span className="text-muted-foreground flex-shrink-0">
-          {getFormatIcon(post.format)}
-        </span>
-        <span className="truncate text-sm font-medium">
-          {title}
-        </span>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-1.5">
-        <StatusBadge status={post.status} />
-        <PillarBadge pillar={post.pillar} />
-        <FormulaBadge formula={post.script_formula} />
-      </div>
-
-      {scheduledTime && (
-        <div className="text-xs text-muted-foreground">
-          {scheduledTime}
+      <div className="flex items-center justify-between gap-1 overflow-hidden">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span className="text-muted-foreground flex-shrink-0">
+            {getFormatIcon(post.format)}
+          </span>
+          <span className="truncate text-xs font-semibold group-hover:text-primary transition-colors">
+            {title}
+          </span>
         </div>
-      )}
+        {post.full_script && (
+          <span title="Script written">
+            <FileText className="h-3 w-3 text-indigo-500 flex-shrink-0" />
+          </span>
+        )}
+      </div>
+
+      <div
+        className="flex flex-wrap items-center justify-between gap-1"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <QuickStatusSelector postId={post.id} currentStatus={post.status} />
+        <PillarBadge pillar={post.pillar} />
+      </div>
     </div>
   );
 }

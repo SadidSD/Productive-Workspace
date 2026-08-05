@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
+import { ScriptEditor } from './script-editor'
 import { createInstagramPost, updateInstagramPost } from '@/lib/services/instagram'
 import type {
   InstagramPost,
@@ -71,12 +72,24 @@ export function CreatePostDialog({
   const [pillar, setPillar] = React.useState<IgContentPillar | ''>('')
   const [scriptFormula, setScriptFormula] = React.useState<IgScriptFormula | ''>('')
   const [funnelStage, setFunnelStage] = React.useState<IgFunnelStage | ''>('')
+
+  // Script Structure
   const [hookText, setHookText] = React.useState('')
   const [retainText, setRetainText] = React.useState('')
   const [rewardText, setRewardText] = React.useState('')
+
+  // Extended Scripting Studio
+  const [fullScript, setFullScript] = React.useState('')
+  const [brollNotes, setBrollNotes] = React.useState('')
+  const [textOverlays, setTextOverlays] = React.useState('')
+  const [audioCues, setAudioCues] = React.useState('')
+
+  // VVA Framework
   const [hasValue, setHasValue] = React.useState(false)
   const [hasVulnerability, setHasVulnerability] = React.useState(false)
   const [hasAuthority, setHasAuthority] = React.useState(false)
+
+  // Scheduling & Metadata
   const [scheduledDate, setScheduledDate] = React.useState('')
   const [scheduledTime, setScheduledTime] = React.useState('')
   const [cta, setCta] = React.useState('DM me "TCG" to see how I can help.')
@@ -97,6 +110,10 @@ export function CreatePostDialog({
         setHookText(editPost.hook_text || '')
         setRetainText(editPost.retain_text || '')
         setRewardText(editPost.reward_text || '')
+        setFullScript(editPost.full_script || '')
+        setBrollNotes(editPost.broll_notes || '')
+        setTextOverlays(editPost.text_overlays || '')
+        setAudioCues(editPost.audio_cues || '')
         setHasValue(editPost.has_value || false)
         setHasVulnerability(editPost.has_vulnerability || false)
         setHasAuthority(editPost.has_authority || false)
@@ -118,6 +135,10 @@ export function CreatePostDialog({
         setHookText('')
         setRetainText('')
         setRewardText('')
+        setFullScript('')
+        setBrollNotes('')
+        setTextOverlays('')
+        setAudioCues('')
         setHasValue(false)
         setHasVulnerability(false)
         setHasAuthority(false)
@@ -151,6 +172,10 @@ export function CreatePostDialog({
         hook_text: hookText,
         retain_text: retainText,
         reward_text: rewardText,
+        full_script: fullScript,
+        broll_notes: brollNotes,
+        text_overlays: textOverlays,
+        audio_cues: audioCues,
         has_value: hasValue,
         has_vulnerability: hasVulnerability,
         has_authority: hasAuthority,
@@ -186,13 +211,13 @@ export function CreatePostDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{editPost ? 'Edit Post' : 'Create New Post'}</DialogTitle>
+          <DialogTitle>{editPost ? 'Edit Post & Script' : 'Create New Post & Script'}</DialogTitle>
           <DialogDescription>
             {editPost
-              ? 'Update the details of your Instagram post.'
-              : 'Plan a new Instagram post following your content framework.'}
+              ? 'Update script dialogue, B-roll notes, and post status.'
+              : 'Draft a new Reel idea, write full scripts, and plan your production pipeline.'}
           </DialogDescription>
         </DialogHeader>
 
@@ -201,24 +226,13 @@ export function CreatePostDialog({
           <div className="space-y-4">
             <h3 className="text-sm font-medium leading-none">Core Info</h3>
             <div className="grid gap-2">
-              <Label htmlFor="title">Title / Hook *</Label>
+              <Label htmlFor="title">Title / Hook Idea *</Label>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="The core hook or title..."
+                placeholder="e.g., TCGplayer fees are stealing your profit..."
                 required
-              />
-            </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="caption">Caption</Label>
-              <Textarea
-                id="caption"
-                value={caption}
-                onChange={(e) => setCaption(e.target.value)}
-                placeholder="Draft your post caption here..."
-                rows={4}
               />
             </div>
 
@@ -238,18 +252,21 @@ export function CreatePostDialog({
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="status">Status</Label>
+                <Label htmlFor="status">Production Status</Label>
                 <Select value={status} onValueChange={(v: IgPostStatus) => setStatus(v)}>
                   <SelectTrigger id="status">
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="idea">Idea</SelectItem>
-                    <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="ready">Ready</SelectItem>
-                    <SelectItem value="scheduled">Scheduled</SelectItem>
-                    <SelectItem value="published">Published</SelectItem>
-                    <SelectItem value="missed">Missed</SelectItem>
+                    <SelectItem value="idea">Idea 💡</SelectItem>
+                    <SelectItem value="draft">Draft 📝</SelectItem>
+                    <SelectItem value="scripted">Scripted ✍️</SelectItem>
+                    <SelectItem value="shot">Shot / Filmed 🎥</SelectItem>
+                    <SelectItem value="editing">Editing ✂️</SelectItem>
+                    <SelectItem value="ready">Ready ✨</SelectItem>
+                    <SelectItem value="scheduled">Scheduled 📅</SelectItem>
+                    <SelectItem value="published">Posted 🚀</SelectItem>
+                    <SelectItem value="missed">Missed ⚠️</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -258,7 +275,35 @@ export function CreatePostDialog({
 
           <Separator />
 
-          {/* Section 2: Strategy Framework */}
+          {/* Section 2: Scripting Studio Workspace */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-medium leading-none flex items-center justify-between">
+              <span>Scripting Studio</span>
+              <span className="text-xs text-muted-foreground font-normal">
+                Draft full dialogue, B-Roll, & captions
+              </span>
+            </h3>
+            <ScriptEditor
+              hookText={hookText}
+              setHookText={setHookText}
+              retainText={retainText}
+              setRetainText={setRetainText}
+              rewardText={rewardText}
+              setRewardText={setRewardText}
+              fullScript={fullScript}
+              setFullScript={setFullScript}
+              brollNotes={brollNotes}
+              setBrollNotes={setBrollNotes}
+              textOverlays={textOverlays}
+              setTextOverlays={setTextOverlays}
+              audioCues={audioCues}
+              setAudioCues={setAudioCues}
+            />
+          </div>
+
+          <Separator />
+
+          {/* Section 3: Strategy Framework */}
           <div className="space-y-4">
             <h3 className="text-sm font-medium leading-none">Strategy Framework</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -310,44 +355,8 @@ export function CreatePostDialog({
 
           <Separator />
 
-          {/* Section 3: Script Structure */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium leading-none">Script Structure (Hook → Retain → Reward)</h3>
-            <div className="grid gap-2">
-              <Label htmlFor="hookText">Hook (0-3s)</Label>
-              <Input
-                id="hookText"
-                value={hookText}
-                onChange={(e) => setHookText(e.target.value)}
-                placeholder="The scroll-stopping opening line..."
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="retainText">Retain (4-20s)</Label>
-              <Textarea
-                id="retainText"
-                value={retainText}
-                onChange={(e) => setRetainText(e.target.value)}
-                placeholder="The problem + solution narrative..."
-                rows={3}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="rewardText">Reward (21-30s+)</Label>
-              <Textarea
-                id="rewardText"
-                value={rewardText}
-                onChange={(e) => setRewardText(e.target.value)}
-                placeholder="The shareable takeaway + CTA..."
-                rows={3}
-              />
-            </div>
-          </div>
-
-          <Separator />
-
           {/* Section 4: VVA Framework */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-medium leading-none">VVA Framework</h3>
               <span className="text-xs text-muted-foreground">Aim for at least 2 of 3</span>
@@ -357,34 +366,51 @@ export function CreatePostDialog({
                 <Checkbox
                   id="hasValue"
                   checked={hasValue}
-                  onCheckedChange={(checked) => setHasValue(checked as boolean)}
+                  onCheckedChange={(checked) => setHasValue(!!checked)}
                 />
-                <Label htmlFor="hasValue" className="font-normal cursor-pointer">Value</Label>
+                <Label htmlFor="hasValue" className="text-xs cursor-pointer">
+                  Value (Educate/Solve)
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="hasVulnerability"
                   checked={hasVulnerability}
-                  onCheckedChange={(checked) => setHasVulnerability(checked as boolean)}
+                  onCheckedChange={(checked) => setHasVulnerability(!!checked)}
                 />
-                <Label htmlFor="hasVulnerability" className="font-normal cursor-pointer">Vulnerability</Label>
+                <Label htmlFor="hasVulnerability" className="text-xs cursor-pointer">
+                  Vulnerability (Real Story)
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="hasAuthority"
                   checked={hasAuthority}
-                  onCheckedChange={(checked) => setHasAuthority(checked as boolean)}
+                  onCheckedChange={(checked) => setHasAuthority(!!checked)}
                 />
-                <Label htmlFor="hasAuthority" className="font-normal cursor-pointer">Authority</Label>
+                <Label htmlFor="hasAuthority" className="text-xs cursor-pointer">
+                  Authority (Proof/Results)
+                </Label>
               </div>
             </div>
           </div>
 
           <Separator />
 
-          {/* Section 5: Scheduling & Metadata */}
+          {/* Section 5: Caption & Metadata */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium leading-none">Scheduling & Metadata</h3>
+            <h3 className="text-sm font-medium leading-none">Caption & Scheduling</h3>
+            <div className="grid gap-2">
+              <Label htmlFor="caption">Instagram Caption</Label>
+              <Textarea
+                id="caption"
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+                placeholder="Full Instagram post caption text..."
+                rows={3}
+              />
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="scheduledDate">Scheduled Date</Label>
@@ -405,9 +431,9 @@ export function CreatePostDialog({
                 />
               </div>
             </div>
-            
+
             <div className="grid gap-2">
-              <Label htmlFor="cta">CTA (Call to Action)</Label>
+              <Label htmlFor="cta">Call to Action (CTA)</Label>
               <Input
                 id="cta"
                 value={cta}
@@ -417,40 +443,17 @@ export function CreatePostDialog({
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="hashtags">Hashtags</Label>
+              <Label htmlFor="hashtags">Hashtags (comma separated)</Label>
               <Input
                 id="hashtags"
                 value={hashtags}
                 onChange={(e) => setHashtags(e.target.value)}
-                placeholder="productivity, tcg, contentcreator"
-              />
-              <p className="text-[0.8rem] text-muted-foreground">Comma-separated values</p>
-            </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="mediaNotes">Media Notes</Label>
-              <Textarea
-                id="mediaNotes"
-                value={mediaNotes}
-                onChange={(e) => setMediaNotes(e.target.value)}
-                placeholder="Notes about visuals, b-roll, audio, etc."
-                rows={2}
-              />
-            </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="notes">General Notes</Label>
-              <Textarea
-                id="notes"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Any other notes or ideas..."
-                rows={2}
+                placeholder="#tcgstore, #pokemontcg, #webdeveloper"
               />
             </div>
           </div>
 
-          <DialogFooter className="pt-4">
+          <DialogFooter className="gap-2 sm:gap-0">
             <Button
               type="button"
               variant="outline"
@@ -460,7 +463,13 @@ export function CreatePostDialog({
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? 'Saving...' : editPost ? 'Save Changes' : 'Create Post'}
+              {isLoading
+                ? editPost
+                  ? 'Saving...'
+                  : 'Creating...'
+                : editPost
+                ? 'Save Changes'
+                : 'Create Post'}
             </Button>
           </DialogFooter>
         </form>

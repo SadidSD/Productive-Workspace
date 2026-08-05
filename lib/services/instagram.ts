@@ -4,7 +4,7 @@ import { SupabaseClient } from '@supabase/supabase-js'
 // ── Types ──────────────────────────────────────────────────────────────────────
 
 export type IgPostFormat = 'reel' | 'carousel' | 'story' | 'live'
-export type IgPostStatus = 'idea' | 'draft' | 'ready' | 'scheduled' | 'published' | 'missed'
+export type IgPostStatus = 'idea' | 'draft' | 'scripted' | 'shot' | 'editing' | 'ready' | 'scheduled' | 'published' | 'missed'
 export type IgContentPillar = 'platform_pain' | 'solution' | 'education' | 'comparison' | 'case_study'
 export type IgScriptFormula = 'problem_agitate_solve' | 'before_after_bridge' | 'list' | 'opinion_reasoning'
 export type IgFunnelStage = 'awareness' | 'education' | 'trust' | 'conversion'
@@ -24,6 +24,12 @@ export interface InstagramPost {
     hook_text?: string | null
     retain_text?: string | null
     reward_text?: string | null
+
+    // Scripting Studio extended fields
+    full_script?: string | null
+    broll_notes?: string | null
+    text_overlays?: string | null
+    audio_cues?: string | null
 
     // VVA framework
     has_value: boolean
@@ -106,6 +112,10 @@ export async function updateInstagramPost(
 
     if (error) throw error
     return data as InstagramPost
+}
+
+export async function updatePostStatus(postId: string, status: IgPostStatus) {
+    return updateInstagramPost(postId, { status })
 }
 
 export async function deleteInstagramPost(postId: string) {

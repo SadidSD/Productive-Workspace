@@ -1,11 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Calendar, List, Layers, Inbox, CheckCircle2, Target } from "lucide-react"
+import { Plus, Calendar, List, Layers, Inbox, CheckCircle2, Video, Clapperboard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { MetricCard } from "@/components/dashboard/metric-card"
 import { ContentCalendar } from "./content-calendar"
 import { PostList } from "./post-list"
+import { ProductionKanban } from "./production-kanban"
 import { PillarBalance } from "./pillar-balance"
 import { EngagementChecklist } from "./engagement-checklist"
 import { CreatePostDialog } from "./create-post-dialog"
@@ -23,7 +24,7 @@ export function InstagramPageClient({
   posts,
   engagementChecks,
 }: InstagramPageClientProps) {
-  const [viewMode, setViewMode] = useState<"calendar" | "list">("calendar")
+  const [viewMode, setViewMode] = useState<"calendar" | "list" | "pipeline">("calendar")
   const [selectedPost, setSelectedPost] = useState<InstagramPost | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [defaultDate, setDefaultDate] = useState<string | undefined>(undefined)
@@ -52,8 +53,10 @@ export function InstagramPageClient({
   })
 
   const inPipelineCount = posts.filter(
-    (p) => p.status === "idea" || p.status === "draft" || p.status === "ready"
+    (p) => p.status === "idea" || p.status === "draft" || p.status === "scripted" || p.status === "editing" || p.status === "ready"
   ).length
+
+  const shotCount = posts.filter((p) => p.status === "shot").length
 
   const publishedCount = posts.filter((p) => p.status === "published").length
 
@@ -71,7 +74,7 @@ export function InstagramPageClient({
           <NinetyDayTemplate workspaceId={workspaceId} existingPostCount={posts.length} />
           <Button onClick={() => handleCreateNew()}>
             <Plus className="mr-2 h-4 w-4" />
-            New Post
+            New Post / Idea
           </Button>
         </div>
       </div>
@@ -88,29 +91,29 @@ export function InstagramPageClient({
           title="In Pipeline"
           value={inPipelineCount}
           icon={Inbox}
-          description="Ideas, drafts & ready"
+          description="Ideas, scripts & editing"
         />
         <MetricCard
-          title="Published"
+          title="Footage Shot 🎥"
+          value={shotCount}
+          icon={Video}
+          description="Filmed & ready for edit"
+        />
+        <MetricCard
+          title="Posted Live 🚀"
           value={publishedCount}
           icon={CheckCircle2}
-          description="Total published posts"
-        />
-        <MetricCard
-          title="Content Funnel"
-          value="Awareness"
-          icon={Target}
-          description="Mon 1: Pain Points focus"
+          description="Published on Instagram"
         />
       </div>
 
       {/* Main Grid split */}
       <div className="grid gap-8 lg:grid-cols-3">
-        {/* Left Column: Calendar/List View (2/3 width) */}
+        {/* Left Column: Calendar/List/Kanban View (2/3 width) */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <h3 className="text-xl font-semibold tracking-tight text-foreground/90">
-              Content Schedule
+              Content Studio & Schedule
             </h3>
             <div className="flex items-center bg-muted p-1 rounded-lg border border-border/50">
               <Button
@@ -120,7 +123,7 @@ export function InstagramPageClient({
                 className="h-8 text-xs font-medium"
               >
                 <Calendar className="mr-1.5 h-3.5 w-3.5" />
-                Calendar View
+                Calendar
               </Button>
               <Button
                 variant={viewMode === "list" ? "secondary" : "ghost"}
@@ -129,7 +132,16 @@ export function InstagramPageClient({
                 className="h-8 text-xs font-medium"
               >
                 <List className="mr-1.5 h-3.5 w-3.5" />
-                Table View
+                Table
+              </Button>
+              <Button
+                variant={viewMode === "pipeline" ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("pipeline")}
+                className="h-8 text-xs font-medium text-primary"
+              >
+                <Clapperboard className="mr-1.5 h-3.5 w-3.5" />
+                Production Board 🎬
               </Button>
             </div>
           </div>
@@ -140,8 +152,14 @@ export function InstagramPageClient({
               onPostClick={handleEditPost}
               onDateClick={(date) => handleCreateNew(date)}
             />
-          ) : (
+          ) : viewMode === "list" ? (
             <PostList posts={posts} onPostClick={handleEditPost} />
+          ) : (
+            <ProductionKanban
+              posts={posts}
+              onPostClick={handleEditPost}
+              onCreateNew={() => handleCreateNew()}
+            />
           )}
         </div>
 

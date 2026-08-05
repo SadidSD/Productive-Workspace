@@ -174,7 +174,7 @@ create policy "Editors can insert projects" on projects
 
 -- Instagram Content Types
 create type ig_post_format as enum ('reel', 'carousel', 'story', 'live');
-create type ig_post_status as enum ('idea', 'draft', 'ready', 'scheduled', 'published', 'missed');
+create type ig_post_status as enum ('idea', 'draft', 'scripted', 'shot', 'editing', 'ready', 'scheduled', 'published', 'missed');
 create type ig_content_pillar as enum ('platform_pain', 'solution', 'education', 'comparison', 'case_study');
 create type ig_script_formula as enum ('problem_agitate_solve', 'before_after_bridge', 'list', 'opinion_reasoning');
 create type ig_funnel_stage as enum ('awareness', 'education', 'trust', 'conversion');
@@ -195,6 +195,12 @@ create table instagram_posts (
   hook_text text,
   retain_text text,
   reward_text text,
+
+  -- Scripting Studio fields
+  full_script text,                             -- Spoken dialogue / teleprompter script
+  broll_notes text,                             -- Visual shot list & B-roll directions
+  text_overlays text,                           -- On-screen graphics & captions
+  audio_cues text,                              -- Music, sound effects & audio cues
 
   -- VVA framework
   has_value boolean default false,
