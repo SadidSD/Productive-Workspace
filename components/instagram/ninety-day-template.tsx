@@ -109,9 +109,9 @@ export function NinetyDayTemplate({ workspaceId, existingPostCount }: NinetyDayT
       toast.success("90-day content plan generated successfully.")
       setOpen(false)
       router.refresh()
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to populate 90-day plan", error)
-      toast.error("Failed to generate plan.")
+      toast.error(error?.message || "Failed to generate plan.")
     } finally {
       setIsPopulating(false)
     }

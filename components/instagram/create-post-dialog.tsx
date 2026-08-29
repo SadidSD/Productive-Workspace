@@ -200,9 +200,9 @@ export function CreatePostDialog({
 
       setOpen(false)
       router.refresh()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to save post:', error)
-      toast.error(editPost ? 'Failed to update post' : 'Failed to create post')
+      toast.error(error?.message || (editPost ? 'Failed to update post' : 'Failed to create post'))
     } finally {
       setIsLoading(false)
     }
@@ -359,7 +359,18 @@ export function CreatePostDialog({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-medium leading-none">VVA Framework</h3>
-              <span className="text-xs text-muted-foreground">Aim for at least 2 of 3</span>
+              {(() => {
+                const count = [hasValue, hasVulnerability, hasAuthority].filter(Boolean).length
+                return (
+                  <span className={`text-xs font-mono px-2 py-0.5 rounded-full border ${
+                    count >= 2
+                      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-semibold"
+                      : "bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-300"
+                  }`}>
+                    VVA Rule: {count}/3 {count >= 2 ? "✅ (Ready)" : "⚠️ (Aim for ≥2)"}
+                  </span>
+                )
+              })()}
             </div>
             <div className="flex items-center gap-6">
               <div className="flex items-center space-x-2">
@@ -453,7 +464,7 @@ export function CreatePostDialog({
             </div>
           </div>
 
-          <DialogFooter className="gap-2 sm:gap-0">
+          <DialogFooter className="gap-2 sm:gap-0 flex-wrap justify-between">
             <Button
               type="button"
               variant="outline"
@@ -462,15 +473,31 @@ export function CreatePostDialog({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading
-                ? editPost
-                  ? 'Saving...'
-                  : 'Creating...'
-                : editPost
-                ? 'Save Changes'
-                : 'Create Post'}
-            </Button>
+            <div className="flex items-center gap-2">
+              {status === "idea" && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  disabled={isLoading}
+                  onClick={(e) => {
+                    setStatus("scripted")
+                    handleSubmit(e)
+                  }}
+                  className="text-xs"
+                >
+                  ✍️ Mark Scripted & Save
+                </Button>
+              )}
+              <Button type="submit" disabled={isLoading}>
+                {isLoading
+                  ? editPost
+                    ? 'Saving...'
+                    : 'Creating...'
+                  : editPost
+                  ? '💾 Save Changes'
+                  : '💾 Save Post'}
+              </Button>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

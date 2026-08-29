@@ -26,11 +26,15 @@ export default async function InstagramPage() {
     const posts = await getInstagramPosts(currentWorkspace.id, supabase)
     const engagementChecks = await getEngagementChecks(currentWorkspace.id, startDate, endDate, supabase)
 
+    const { data: { user } } = await supabase.auth.getUser()
+    const userName = (user?.user_metadata?.full_name as string) || user?.email?.split('@')[0] || 'Founder'
+
     return (
         <InstagramPageClient
             workspaceId={currentWorkspace.id}
             posts={posts}
             engagementChecks={engagementChecks}
+            userName={userName}
         />
     )
 }
